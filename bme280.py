@@ -13,7 +13,7 @@ class bme280_class:
        
       data = [0] * 40
       
-      if len(bme_message) <> 40:
+      if len(bme_message) != 40:
         self.error=str(len(bme_message))+" data elements received from the sensor, need 40"
         return
       

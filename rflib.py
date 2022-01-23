@@ -25,14 +25,14 @@ def automation(value, devID):
   global transmission_queue
   global timer
   if devID=="82" and value==1:
-      transmission_queue.insert(0,"a56RELAYAON-") #transmit a message
+      transmission_queue.insert(0,"a56RELAYAON-".encode()) #transmit a message
       timer = time.time() #sets the timer
-      print "Automation 1 triggered"
+      print("Automation 1 triggered")
 
-  if (time.time() - timer > 60 and timer<>0): #if more than 60 seconds has passed since timer was set
-      transmission_queue.insert(0,"a56RELAYAOFF-") #transmit a message
+  if (time.time() - timer > 60 and timer!=0): #if more than 60 seconds has passed since timer was set
+      transmission_queue.insert(0,"a56RELAYAOFF-".encode()) #transmit a message
       timer=0 #diable the timer
-      print "Automation 2 triggered"
+      print("Automation 2 triggered")
 
 def rf2serial():
   global message_queue
@@ -67,8 +67,8 @@ def rf2serial():
   except Exception as e:
       template = "An exception of type {0} occurred. Arguments:\n{1!r}"
       message = template.format(type(e).__name__, e.args)
-      print message
-      print e
+      print(message)
+      print(e)
       event.set()
       exit()
 
@@ -142,7 +142,7 @@ def fetch_messages(remove_dup_ind): #removed duplicates and converts binary data
                 if bme_messages==5:
                     bme280=process_bme_reading(bme_data, devID)
                     if (bme280.temp_rt and bme280.hum_rt and bme280.press_rt):
-                      if bme280.error <> "":
+                      if bme280.error != "":
                           dprint(bme280.error)
                       else:
                           processing_queue.insert(len(processing_queue), (devID, "TMPA"+str(round(bme280.temp,2))))
@@ -157,7 +157,7 @@ def fetch_messages(remove_dup_ind): #removed duplicates and converts binary data
         processing_queue.insert(len(processing_queue),x)
 
 def print_debug(message):
-    print message
+    print(message)
     for x in range(0, len(message[1])):
         print(message[1][x],ord(message[1][x]))
 
